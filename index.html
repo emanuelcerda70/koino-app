@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KoinoApp - Tu Iglesia en el bolsillo | Plataforma Multi-Tenant para Iglesias</title>
+  <meta name="description" content="Cada iglesia con su portal individual, su propio logo para la PWA e identidad 100% personalizada. Asistente IA experto en Reina-Valera 1960, ofrendas con MercadoPago y notificaciones push." />
+  
+  <!-- Favicon con el logo oficial de KoinoApp -->
+  <link rel="icon" type="image/png" href="./assets/koinoapp-logo.png" />
+
+  <!-- Google Fonts: Plus Jakarta Sans, Inter & Playfair Display -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Configuración de Tailwind -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', '"Inter"', 'sans-serif'],
+            body: ['"Inter"', 'sans-serif'],
+            serif: ['"Playfair Display"', 'serif']
+          },
+          colors: {
+            brand: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              200: '#bae6fd',
+              300: '#7dd3fc',
+              400: '#38bdf8',
+              500: '#0ea5e9',
+              600: '#0284c7',
+              700: '#0369a1',
+              800: '#075985',
+              900: '#0c4a6e'
+            }
+          },
+          boxShadow: {
+            'soft': '0 12px 32px -8px rgba(14, 165, 233, 0.1)',
+            'card': '0 4px 24px -2px rgba(15, 23, 42, 0.05)',
+            'card-hover': '0 20px 35px -8px rgba(14, 165, 233, 0.14), 0 6px 16px -4px rgba(15, 23, 42, 0.04)',
+            'phone': '0 25px 50px -12px rgba(15, 23, 42, 0.25), 0 0 0 1px rgba(15, 23, 42, 0.08)'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #fafbfc;
+      color: #334155;
+      font-family: 'Inter', sans-serif;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, #0f172a 20%, #0284c7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .glass-nav {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .glow-bg {
+      background: radial-gradient(circle at 50% 8%, rgba(224, 242, 254, 0.85) 0%, rgba(250, 251, 252, 0) 65%);
+    }
+    @keyframes subtle-float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+    }
+    .animate-float {
+      animation: subtle-float 5s ease-in-out infinite;
+    }
+    .phone-bezel {
+      border: 10px solid #1e293b;
+      border-radius: 42px;
+      position: relative;
+      background: #ffffff;
+      overflow: hidden;
+    }
+    .phone-speaker {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 70px;
+      height: 5px;
+      background: #334155;
+      border-radius: 4px;
+      z-index: 20;
+    }
+  </style>
+</head>
+<body class="antialiased text-slate-700 min-h-screen flex flex-col selection:bg-brand-100 selection:text-brand-800">
+
+  <!-- ========================================================================= -->
+  <!-- HEADER / BARRA DE NAVEGACIÓN                                              -->
+  <!-- ========================================================================= -->
+  <header class="sticky top-0 z-50 glass-nav border-b border-slate-100 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- LOGO OFICIAL KOINOAPP -->
+      <a href="#" class="flex items-center gap-3 group focus:outline-none">
+        <img 
+          src="./assets/koinoapp-logo.png" 
+          alt="KoinoApp Logo" 
+          class="h-10 sm:h-11 w-auto object-contain transition-transform duration-200 group-hover:scale-105"
+        />
+        <span class="hidden sm:inline-block px-2 py-0.5 text-[10px] font-semibold bg-brand-50 text-brand-600 rounded-full border border-brand-100 tracking-wide uppercase">
+          Multi-Tenant
+        </span>
+      </a>
+
+      <!-- NAVEGACIÓN & BOTÓN ACCESO -->
+      <nav class="flex items-center gap-4 sm:gap-7">
+        <a href="#caso-real" class="hidden md:inline-flex items-center gap-1.5 text-sm font-semibold text-brand-600 hover:text-brand-700 transition-colors">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          Ver Ejemplo Real
+        </a>
+        <a href="#ia-biblica" class="hidden md:inline-block text-sm font-medium text-slate-500 hover:text-slate-800 transition-colors">
+          IA Reina-Valera 1960
+        </a>
+        <a href="#caracteristicas" class="hidden md:inline-block text-sm font-medium text-slate-500 hover:text-slate-800 transition-colors">
+          Características
+        </a>
+        <a href="#precios" class="hidden md:inline-block text-sm font-semibold text-brand-600 hover:text-brand-700 transition-colors">
+          Planes y Precios
+        </a>
+        
+        <!-- Botón Discreto "Acceso a Iglesias" -->
+        <a 
+          href="https://emacerda1.pythonanywhere.com/login" 
+          title="Acceso al portal individual de cada congregación"
+          class="inline-flex items-center gap-2 px-4 py-2 text-xs sm:text-sm font-semibold text-slate-600 bg-white hover:bg-slate-50 hover:text-brand-600 border border-slate-200 hover:border-brand-200 rounded-full shadow-sm hover:shadow transition-all duration-200"
+        >
+          <i data-lucide="log-in" class="w-4 h-4 text-slate-400 group-hover:text-brand-500"></i>
+          <span>Acceso a Iglesias</span>
+        </a>
+      </nav>
+
+    </div>
+  </header>
+
+  <!-- ========================================================================= -->
+  <!-- HERO SECTION                                                              -->
+  <!-- ========================================================================= -->
+  <section class="relative overflow-hidden pt-10 pb-20 lg:pt-16 lg:pb-28 glow-bg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Copy Central -->
+      <div class="text-center max-w-3xl mx-auto">
+        
+        <!-- Badge -->
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/95 border border-brand-100 text-xs font-semibold text-brand-700 shadow-sm mb-6">
+          <span class="flex h-2 w-2 rounded-full bg-emerald-500"></span>
+          <span>Cada iglesia con su propio portal, logo para la PWA e identidad</span>
+        </div>
+
+        <!-- Título Principal -->
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-[1.12] mb-6">
+          KoinoApp: <br class="hidden sm:inline" />
+          <span class="gradient-text">Tu Iglesia en el bolsillo</span>
+        </h1>
+
+        <!-- Subtítulo -->
+        <p class="text-lg sm:text-xl text-slate-600 leading-relaxed mb-8 max-w-2xl mx-auto font-normal">
+          La plataforma integral para conectar con tu congregación. Asistente con IA experta en la <strong>Biblia Reina-Valera 1960</strong>, diezmos digitales con MercadoPago, eventos y notificaciones push en una sola App.
+        </p>
+
+        <!-- CTA Buttons -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a 
+            href="#contacto" 
+            class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 text-base font-semibold text-white bg-slate-900 hover:bg-slate-800 rounded-2xl shadow-soft hover:shadow-xl transition-all duration-200 transform hover:-translate-y-0.5 group cursor-pointer"
+          >
+            <span>Quiero KoinoApp en mi Iglesia</span>
+            <i data-lucide="arrow-right" class="w-4 h-4 text-brand-300 group-hover:translate-x-1 transition-transform"></i>
+          </a>
+
+          <a 
+            href="#ia-biblica" 
+            class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 text-base font-semibold text-slate-700 bg-white hover:bg-slate-50 border border-slate-200 hover:border-slate-300 rounded-2xl shadow-xs transition-all duration-200"
+          >
+            <i data-lucide="book-open" class="w-4 h-4 text-brand-500"></i>
+            <span>Conocer la IA Reina-Valera 1960</span>
+          </a>
+        </div>
+
+        <!-- Multi-tenant Pillars Badges -->
+        <div class="mt-10 flex flex-wrap items-center justify-center gap-6 text-xs text-slate-500">
+          <div class="flex items-center gap-1.5">
+            <i data-lucide="sparkles" class="w-4 h-4 text-brand-500"></i>
+            <span>PWA instalable con tu propio logo</span>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <i data-lucide="book-check" class="w-4 h-4 text-brand-500"></i>
+            <span>IA Bíblica Reina-Valera 1960</span>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <i data-lucide="credit-card" class="w-4 h-4 text-amber-500"></i>
+            <span>MercadoPago directo a tu iglesia</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ===================================================================== -->
+      <!-- DUAL PHONE SHOWCASE: CASO REAL EN PRODUCCIÓN                           -->
+      <!-- ===================================================================== -->
+      <div id="caso-real" class="mt-14 sm:mt-16 max-w-5xl mx-auto">
+        <div class="text-center mb-6">
+          <span class="text-xs uppercase font-bold tracking-wider text-slate-400">
+            Vista previa en vivo · Caso Real: <strong class="text-slate-700">"La Casa del Padre"</strong>
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-center justify-center">
+          
+          <!-- CELULAR 1: Splash Screen / Logo Propio de la Iglesia (Limpia sin barra de volumen) -->
+          <div class="flex flex-col items-center">
+            <div class="phone-bezel shadow-phone w-[280px] sm:w-[310px] h-[580px] sm:h-[620px] flex flex-col items-center justify-center relative bg-[#faf9f6]">
+              <div class="phone-speaker"></div>
+              
+              <!-- Imagen real actualizada y limpia de la pantalla de bienvenida -->
+              <img 
+                src="./assets/splash-lacasadelpadre.jpg" 
+                alt="Splash Screen PWA Iglesia La Casa del Padre" 
+                class="w-full h-full object-cover object-center"
+              />
+
+              <!-- Overlay flotante informativo -->
+              <div class="absolute bottom-4 inset-x-4 bg-white/95 backdrop-blur-md p-3 rounded-2xl border border-slate-100 shadow-lg text-center">
+                <p class="text-xs font-bold text-slate-800">1. PWA con Tu Propio Logo</p>
+                <p class="text-[10px] text-slate-500 leading-tight mt-0.5">
+                  El feligrés instala la App y ve el isotipo, colores y nombre exclusivo de tu iglesia.
+                </p>
+              </div>
+            </div>
+            <div class="mt-4 text-center">
+              <span class="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-600 bg-white px-3 py-1 rounded-full border border-slate-200">
+                <i data-lucide="shield" class="w-3.5 h-3.5 text-brand-500"></i>
+                Splash Screen & Ícono Propio
+              </span>
+            </div>
+          </div>
+
+          <!-- CELULAR 2: App Activa con Devocional, Módulos y Notificaciones -->
+          <div class="flex flex-col items-center">
+            <div class="phone-bezel shadow-phone w-[280px] sm:w-[310px] h-[580px] sm:h-[620px] flex flex-col items-center justify-center relative bg-[#faf9f6]">
+              <div class="phone-speaker"></div>
+              
+              <!-- Imagen real de la App en funcionamiento -->
+              <img 
+                src="./assets/app-lacasadelpadre.jpg" 
+                alt="Pantalla principal KoinoApp para La Casa del Padre" 
+                class="w-full h-full object-cover object-top"
+              />
+
+              <!-- Badges flotantes interactivos de características clave -->
+              <div class="absolute top-16 -left-4 sm:-left-8 bg-white p-2.5 rounded-2xl shadow-xl border border-slate-100 flex items-center gap-2 max-w-[210px] animate-float">
+                <span class="text-base">✨</span>
+                <div>
+                  <p class="text-[11px] font-bold text-slate-800 leading-tight">IA Reina-Valera 1960</p>
+                  <p class="text-[9px] text-slate-400">Devocionales y respuestas bíblicas</p>
+                </div>
+              </div>
+
+              <div class="absolute bottom-16 -right-4 sm:-right-8 bg-white p-2.5 rounded-2xl shadow-xl border border-slate-100 flex items-center gap-2 max-w-[210px]">
+                <span class="text-base">💛</span>
+                <div>
+                  <p class="text-[11px] font-bold text-slate-800 leading-tight">Ofrendas & MercadoPago</p>
+                  <p class="text-[9px] text-slate-400">Directo a la cuenta de la iglesia</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-4 text-center">
+              <span class="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-600 bg-white px-3 py-1 rounded-full border border-slate-200">
+                <i data-lucide="smartphone" class="w-3.5 h-3.5 text-emerald-500"></i>
+                Portal Individual en Acción
+              </span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- SECCIÓN DESTACADA: ASISTENTE IA EN REINA-VALERA 1960                      -->
+  <!-- ========================================================================= -->
+  <section id="ia-biblica" class="py-20 lg:py-28 bg-gradient-to-b from-white via-brand-50/40 to-white border-t border-slate-100">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="max-w-3xl mx-auto text-center mb-16">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-100/70 text-brand-800 text-xs font-bold uppercase tracking-wider mb-4">
+          <i data-lucide="sparkles" class="w-3.5 h-3.5 text-brand-600"></i>
+          Inteligencia Artificial Pastoral
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+          Una IA experta en la Biblia Reina-Valera 1960 al servicio de tu comunidad
+        </h2>
+        <p class="mt-4 text-base sm:text-lg text-slate-600 leading-relaxed">
+          Diseñada con estricta fidelidad a las Sagradas Escrituras. Acompaña a tus miembros todos los días despejando dudas bíblicas y brindando orientación espiritual para situaciones cotidianas, fundamentada en la Palabra de Dios.
+        </p>
+      </div>
+
+      <!-- Grid Visual de la IA Bíblica: Demostración Interactiva + 3 Capacidades -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        
+        <!-- Mockup de Chat Bíblico (7 Cols) -->
+        <div class="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-soft">
+          <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-6">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-2xl bg-brand-500 text-white flex items-center justify-center font-bold text-sm shadow-sm">
+                <i data-lucide="book-open" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <h4 class="text-sm font-bold text-slate-800 leading-none">Asistente Bíblico KoinoApp</h4>
+                <p class="text-[11px] text-emerald-600 font-semibold mt-1 flex items-center gap-1">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                  Especializado en Reina-Valera 1960 (RVR1960)
+                </p>
+              </div>
+            </div>
+            <span class="text-[11px] font-semibold text-slate-400 bg-slate-50 px-2.5 py-1 rounded-full border border-slate-200">
+              En Vivo
+            </span>
+          </div>
+
+          <!-- Mensajes de Ejemplo -->
+          <div class="space-y-4 text-sm">
+            <!-- Consulta del feligrés -->
+            <div class="flex justify-end">
+              <div class="bg-slate-100 text-slate-800 p-4 rounded-2xl rounded-tr-xs max-w-md">
+                <p class="text-xs font-semibold text-slate-500 mb-1">Feligrés de tu iglesia:</p>
+                <p class="leading-relaxed">
+                  "Estoy pasando por mucha preocupación e incertidumbre en mi trabajo y me cuesta dormir. ¿Qué me enseña la Palabra de Dios para sobrellevar esto?"
+                </p>
+              </div>
+            </div>
+
+            <!-- Respuesta de la IA RVR1960 -->
+            <div class="flex justify-start">
+              <div class="bg-brand-50/70 border border-brand-100 text-slate-800 p-4 sm:p-5 rounded-2xl rounded-tl-xs max-w-lg">
+                <div class="flex items-center gap-1.5 text-xs font-bold text-brand-700 mb-2">
+                  <i data-lucide="quote" class="w-3.5 h-3.5"></i>
+                  <span>Filipenses 4:6-7 (RVR1960)</span>
+                </div>
+                <blockquote class="italic text-slate-700 border-l-2 border-brand-400 pl-3 py-1 mb-3 text-xs sm:text-sm bg-white/70 rounded-r-lg">
+                  "Por nada estéis afanosos, sino sean conocidas vuestras peticiones delante de Dios en toda oración y ruego, con acción de gracias. Y la paz de Dios, que sobrepasa todo entendimiento, guardará vuestros corazones y vuestros pensamientos en Cristo Jesús."
+                </blockquote>
+                <p class="text-xs sm:text-sm leading-relaxed text-slate-600">
+                  Hermano, la Palabra te invita a transformar la angustia en oración activa. No estás solo en esta carga: llevá hoy tu necesidad al Señor descansando en que Su paz cuidará tu mente y tu descanso esta noche.
+                </p>
+                <div class="mt-3 pt-3 border-t border-brand-100/60 flex items-center justify-between text-[11px] text-slate-400">
+                  <span>Fundamentado en las Escrituras</span>
+                  <span class="text-brand-600 font-semibold cursor-pointer">Ver devocional relacionado →</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 3 Tarjetas de Beneficio de la IA (5 Cols) -->
+        <div class="lg:col-span-5 space-y-4">
+          
+          <div class="p-6 rounded-2xl bg-white border border-slate-200/80 shadow-xs hover:border-brand-200 transition-all">
+            <div class="w-10 h-10 rounded-xl bg-sky-100 text-brand-600 flex items-center justify-center mb-3">
+              <i data-lucide="compass" class="w-5 h-5"></i>
+            </div>
+            <h4 class="text-base font-bold text-slate-900">Guía en Situaciones Cotidianas</h4>
+            <p class="text-xs sm:text-sm text-slate-600 mt-1 leading-relaxed">
+              Consejo bíblico para momentos de ansiedad, dificultades matrimoniales, crianza, finanzas y toma de decisiones, siempre arraigado en principios de la Palabra.
+            </p>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-white border border-slate-200/80 shadow-xs hover:border-brand-200 transition-all">
+            <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center mb-3">
+              <i data-lucide="search" class="w-5 h-5"></i>
+            </div>
+            <h4 class="text-base font-bold text-slate-900">Buscador y Dudas Teológicas</h4>
+            <p class="text-xs sm:text-sm text-slate-600 mt-1 leading-relaxed">
+              Búsqueda temática contextual y respuestas claras a dudas difíciles de la Biblia en la versión Reina-Valera 1960 que todos conocen y aman.
+            </p>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-white border border-slate-200/80 shadow-xs hover:border-brand-200 transition-all">
+            <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center mb-3">
+              <i data-lucide="sun" class="w-5 h-5"></i>
+            </div>
+            <h4 class="text-base font-bold text-slate-900">Devocionales Diarios Automáticos</h4>
+            <p class="text-xs sm:text-sm text-slate-600 mt-1 leading-relaxed">
+              Nutre espiritualmente a tu congregación de lunes a lunes con reflexiones diarias generadas o revisadas con asistencia pastoral inteligente.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- SECCIÓN MULTI-TENANT: PERSONALIZADO PARA CADA IGLESIA                     -->
+  <!-- ========================================================================= -->
+  <section id="multi-tenant" class="py-20 lg:py-24 bg-white border-t border-slate-100">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-50 text-brand-700 text-xs font-bold uppercase tracking-wider mb-3">
+          ¿Cómo funciona el modelo Multi-Tenant?
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+          Un portal individual y único para cada congregación
+        </h2>
+        <p class="mt-4 text-base sm:text-lg text-slate-600">
+          KoinoApp no mezcla iglesias. Cada congregación recibe su propio entorno independiente, configurado con su logo, sus colores, sus pastores y sus canales oficiales.
+        </p>
+      </div>
+
+      <!-- 3 Columnas de Personalización Total -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <!-- Item 1 -->
+        <div class="p-7 rounded-3xl bg-slate-50/70 border border-slate-200/80 hover:bg-white hover:shadow-card-hover hover:border-brand-200 transition-all duration-300">
+          <div class="w-12 h-12 rounded-2xl bg-brand-100 text-brand-600 flex items-center justify-center text-xl font-bold mb-5">
+            <i data-lucide="palette" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-lg font-bold text-slate-900 mb-2">Marca, Logo y Colores Propios</h3>
+          <p class="text-slate-600 text-sm leading-relaxed">
+            Como en el ejemplo de <em>"La Casa del Padre"</em>, tu iglesia tiene su logotipo en el splash de carga, su ícono en la pantalla del celular y su paleta de colores institucional.
+          </p>
+        </div>
+
+        <!-- Item 2 -->
+        <div class="p-7 rounded-3xl bg-slate-50/70 border border-slate-200/80 hover:bg-white hover:shadow-card-hover hover:border-brand-200 transition-all duration-300">
+          <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center text-xl font-bold mb-5">
+            <i data-lucide="layers" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-lg font-bold text-slate-900 mb-2">Módulos a la Medida Pastoral</h3>
+          <p class="text-slate-600 text-sm leading-relaxed">
+            Elegí qué secciones mostrar: <strong>Adoración</strong>, <strong>Recursos y Escuela Bíblica</strong>, <strong>Muro de Oración</strong> interactivo, <strong>Multimedia</strong> y formulario <strong>"Queremos Conocerte"</strong>.
+          </p>
+        </div>
+
+        <!-- Item 3 -->
+        <div class="p-7 rounded-3xl bg-slate-50/70 border border-slate-200/80 hover:bg-white hover:shadow-card-hover hover:border-brand-200 transition-all duration-300">
+          <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl font-bold mb-5">
+            <i data-lucide="wallet" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-lg font-bold text-slate-900 mb-2">Diezmos Directos a tu Cuenta</h3>
+          <p class="text-slate-600 text-sm leading-relaxed">
+            Las donaciones y ofrendas se cobran directamente a través de las credenciales de <strong>MercadoPago de tu propia iglesia</strong>. Sin intermediación ni comisiones de KoinoApp.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- CARACTERÍSTICAS (GRID DE TARJETAS PRINCIPALES)                            -->
+  <!-- ========================================================================= -->
+  <section id="caracteristicas" class="py-20 lg:py-28 bg-slate-50/60 border-y border-slate-100">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Encabezado de Sección -->
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <h2 class="text-xs font-bold uppercase tracking-wider text-brand-600 mb-2">
+          Tecnología Diseñada para Edificar
+        </h2>
+        <h3 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+          Cuatro herramientas esenciales en la mano de tu congregación
+        </h3>
+        <p class="mt-3 text-base text-slate-500">
+          Todo lo necesario para acompañar a cada miembro de lunes a domingo.
+        </p>
+      </div>
+
+      <!-- Tarjetas Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        
+        <!-- Tarjeta 1: PWA Nativa -->
+        <div class="group p-8 rounded-3xl bg-white border border-slate-200/80 hover:border-brand-200 shadow-card hover:shadow-card-hover transition-all duration-300">
+          <div class="w-14 h-14 rounded-2xl bg-brand-100/80 text-brand-600 flex items-center justify-center text-2xl mb-6 group-hover:scale-105 transition-transform duration-300">
+            📱
+          </div>
+          <div class="flex items-center gap-2 mb-2">
+            <h4 class="text-xl font-bold text-slate-900">PWA Nativa</h4>
+            <span class="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-brand-50 text-brand-700 border border-brand-100">Cero Fricción</span>
+          </div>
+          <p class="text-slate-600 leading-relaxed text-sm sm:text-base">
+            App instalable desde el navegador, rápida, ligera y con los colores de cada iglesia. Sin descargas pesadas desde tiendas. Un enlace o código QR y los feligreses la tienen en su pantalla de inicio en un segundo.
+          </p>
+          <div class="mt-6 pt-5 border-t border-slate-100 flex items-center gap-2 text-xs font-medium text-slate-500">
+            <i data-lucide="check" class="w-4 h-4 text-brand-500"></i>
+            <span>Compatible con todos los celulares (Android e iOS)</span>
+          </div>
+        </div>
+
+        <!-- Tarjeta 2: Ofrendas Digitales -->
+        <div class="group p-8 rounded-3xl bg-white border border-slate-200/80 hover:border-brand-200 shadow-card hover:shadow-card-hover transition-all duration-300">
+          <div class="w-14 h-14 rounded-2xl bg-amber-100/80 text-amber-600 flex items-center justify-center text-2xl mb-6 group-hover:scale-105 transition-transform duration-300">
+            💛
+          </div>
+          <div class="flex items-center gap-2 mb-2">
+            <h4 class="text-xl font-bold text-slate-900">Ofrendas Digitales</h4>
+            <span class="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-100">Transparencia</span>
+          </div>
+          <p class="text-slate-600 leading-relaxed text-sm sm:text-base">
+            Integración transparente con MercadoPago. Permití que tu congregación diezme y ofrende con débito, crédito o saldo en cuenta, depositado de inmediato en las cuentas de tu iglesia con comprobantes automáticos.
+          </p>
+          <div class="mt-6 pt-5 border-t border-slate-100 flex items-center gap-2 text-xs font-medium text-slate-500">
+            <i data-lucide="check" class="w-4 h-4 text-brand-500"></i>
+            <span>Acreditación directa en la cuenta de tu congregación</span>
+          </div>
+        </div>
+
+        <!-- Tarjeta 3: Asistente IA Reina-Valera 1960 -->
+        <div class="group p-8 rounded-3xl bg-white border border-slate-200/80 hover:border-brand-200 shadow-card hover:shadow-card-hover transition-all duration-300">
+          <div class="w-14 h-14 rounded-2xl bg-sky-100/80 text-sky-600 flex items-center justify-center text-2xl mb-6 group-hover:scale-105 transition-transform duration-300">
+            📖
+          </div>
+          <div class="flex items-center gap-2 mb-2">
+            <h4 class="text-xl font-bold text-slate-900">Asistente IA (RVR 1960)</h4>
+            <span class="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-sky-50 text-sky-700 border border-sky-100">Reina-Valera 1960</span>
+          </div>
+          <p class="text-slate-600 leading-relaxed text-sm sm:text-base">
+            Generación automática de devocionales y buscador bíblico temático. Una IA experta en la Biblia Reina-Valera 1960 para despejar dudas y orientar en situaciones cotidianas con fundamentos sólidos de la Palabra de Dios.
+          </p>
+          <div class="mt-6 pt-5 border-t border-slate-100 flex items-center gap-2 text-xs font-medium text-slate-500">
+            <i data-lucide="check" class="w-4 h-4 text-brand-500"></i>
+            <span>Fidelidad bíblica y respuestas fundamentadas en versículos</span>
+          </div>
+        </div>
+
+        <!-- Tarjeta 4: Alertas Push -->
+        <div class="group p-8 rounded-3xl bg-white border border-slate-200/80 hover:border-brand-200 shadow-card hover:shadow-card-hover transition-all duration-300">
+          <div class="w-14 h-14 rounded-2xl bg-rose-100/80 text-rose-600 flex items-center justify-center text-2xl mb-6 group-hover:scale-105 transition-transform duration-300">
+            🔔
+          </div>
+          <div class="flex items-center gap-2 mb-2">
+            <h4 class="text-xl font-bold text-slate-900">Alertas Push</h4>
+            <span class="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-rose-50 text-rose-700 border border-rose-100">Canal Directo</span>
+          </div>
+          <p class="text-slate-600 leading-relaxed text-sm sm:text-base">
+            Avisos y recordatorios directo a la pantalla de los feligreses. ¿Hay culto de jóvenes hoy? ¿Un nuevo devocional publicado? Notificá a toda la congregación al instante sin depender del algoritmo de redes sociales.
+          </p>
+          <div class="mt-6 pt-5 border-t border-slate-100 flex items-center gap-2 text-xs font-medium text-slate-500">
+            <i data-lucide="check" class="w-4 h-4 text-brand-500"></i>
+            <span>Llega a la pantalla de bloqueo de los miembros</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- SECCIÓN DE PLANES Y PRECIOS                                               -->
+  <!-- ========================================================================= -->
+  <section id="precios" class="py-20 lg:py-28 bg-white border-t border-slate-100 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Encabezado de Precios -->
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-brand-50 text-brand-700 text-xs font-bold uppercase tracking-wider mb-3">
+          Inversión Accesible y Transparente
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+          Planes diseñados para cada etapa de tu ministerio
+        </h2>
+        <p class="mt-4 text-base sm:text-lg text-slate-600">
+          Una plataforma que se financia sola con las ofrendas digitales de tu congregación. Sin comisiones sorpresa. 14 días de prueba sin tarjeta.
+        </p>
+
+        <!-- Toggle Mensual / Anual (10% OFF + Congelamiento) -->
+        <div class="mt-8 inline-flex items-center gap-3 bg-slate-100 p-1.5 rounded-2xl border border-slate-200">
+          <button 
+            type="button" 
+            id="btn-billing-monthly" 
+            onclick="setBillingCycle('monthly')" 
+            class="px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all shadow-xs bg-white text-slate-900"
+          >
+            Pago Mensual
+          </button>
+          <button 
+            type="button" 
+            id="btn-billing-annual" 
+            onclick="setBillingCycle('annual')" 
+            class="px-5 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-500 hover:text-slate-900 transition-all flex items-center gap-1.5"
+          >
+            <span>Pago Anual</span>
+            <span class="px-2 py-0.5 text-[10px] font-extrabold bg-emerald-100 text-emerald-700 rounded-full">
+              10% OFF
+            </span>
+          </button>
+        </div>
+
+        <!-- Banner Explicativo de Congelamiento por IPC -->
+        <div class="mt-4 inline-flex items-center gap-2 text-xs text-slate-500 bg-brand-50/70 border border-brand-100 px-4 py-1.5 rounded-full">
+          <i data-lucide="shield-alert" class="w-3.5 h-3.5 text-brand-500 shrink-0"></i>
+          <span>El plan mensual se ajusta semestralmente por IPC. <strong>El pago anual congela tu precio por 12 meses.</strong></span>
+        </div>
+      </div>
+
+      <!-- Grid de 3 Tarjetas de Precios -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch max-w-6xl mx-auto">
+        
+        <!-- ==================== PLAN SEMILLA ==================== -->
+        <div class="rounded-3xl bg-slate-50/60 border border-slate-200 p-8 flex flex-col justify-between hover:bg-white hover:shadow-card-hover hover:border-brand-200 transition-all duration-300">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Inicio Ministerial</span>
+              <span class="text-2xl">🌱</span>
+            </div>
+            <h3 class="text-2xl font-extrabold text-slate-900">Plan Semilla</h3>
+            <p class="text-xs text-slate-500 mt-1">Ideal para misiones o congregaciones que buscan dar el salto digital con su propia App.</p>
+            
+            <!-- Precio -->
+            <div class="mt-6 mb-6 pb-6 border-b border-slate-200">
+              <div class="flex items-baseline gap-1">
+                <span class="text-4xl font-extrabold text-slate-900 price-semilla">$35.000</span>
+                <span class="text-sm font-semibold text-slate-500 billing-text">/mes</span>
+              </div>
+              <p class="text-[11px] text-slate-400 mt-1 subtext-semilla">Ajuste semestral por IPC</p>
+            </div>
+
+            <!-- Features -->
+            <ul class="space-y-3 text-xs sm:text-sm text-slate-600 mb-8">
+              <li class="flex items-start gap-2.5">
+                <i data-lucide="check" class="w-4 h-4 text-emerald-500 shrink-0 mt-0.5"></i>
+                <span><strong>PWA instalable</strong> con logo y colores de tu iglesia</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <i data-lucide="check" class="w-4 h-4 text-emerald-500 shrink-0 mt-0.5"></i>
+                <span><strong>Diezmos con MercadoPago</strong> (directo a tu cuenta, 0% comisión KoinoApp)</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <i data-lucide="check" class="w-4 h-4 text-emerald-500 shrink-0 mt-0.5"></i>
+                <span>Calendario de cultos y eventos</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <i data-lucide="check" class="w-4 h-4 text-emerald-500 shrink-0 mt-0.5"></i>
+                <span>Secciones fijas (Adoración, Multimedia, Horarios)</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <i data-lucide="check" class="w-4 h-4 text-emerald-500 shrink-0 mt-0.5"></i>
+                <span>Panel de administración pastoral</span>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <a 
+              href="#contacto" 
+              onclick="seleccionarPlan('Plan Semilla')"
+              class="w-full py-3.5 px-6 rounded-xl font-bold text-xs sm:text-sm text-slate-700 bg-white hover:bg-slate-100 border border-slate-300 text-center block transition-all shadow-2xs"
+            >
+              Comenzar prueba gratis de 14 días
+            </a>
+          </div>
+        </div>
+
+        <!-- ==================== PLAN CRECIMIENTO (DESTACADO) ==================== -->
+        <div class="rounded-3xl bg-gradient-to-b from-white via-sky-50/30 to-white border-2 border-brand-400 p-8 flex flex-col justify-between shadow-soft hover:shadow-card-hover relative transition-all duration-300">
+          
+          <!-- Badge Más Elegido -->
+          <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-brand-600 to-sky-500 text-white text-[11px] font-extrabold uppercase tracking-wider shadow-sm flex items-center gap-1.5">
+            <i data-lucide="sparkles" class="w-3 h-3"></i>
+            <span>Más Elegido por las Iglesias</span>
+          </div>
+
+          <div>
+            <div class="flex items-center justify-between mb-4 mt-1">
+              <span class="text-xs font-bold uppercase tracking-wider text-brand-600">Comunidad Activa</span>
+              <span class="text-2xl">🔥</span>
+            </div>
+            <h3 class="text-2xl font-extrabold text-slate-900">Plan Crecimiento</h3>
+            <p class="text-xs text-slate-500 mt-1">Para iglesias que buscan conectar, edificar y cuidar a su congregación a diario.</p>
+            
+            <!-- Precio -->
+            <div class="mt-6 mb-6 pb-6 border-b border-brand-100">
+              <div class="flex items-baseline gap-1">
+                <span class="text-4xl font-extrabold text-slate-900 price-crecimiento">$55.000</span>
+                <span class="text-sm font-semibold text-slate-500 billing-text">/mes</span>
+              </div>
+              <p class="text-[11px] text-slate-400 mt-1 subtext-crecimiento">Ajuste semestral por IPC</p>
+            </div>
+
+            <!-- Features -->
+            <ul class="space-y-3 text-xs sm:text-sm text-slate-700 mb-8">
+              <li class="flex items-start gap-2.5 font-medium text-brand-900">
+                <i data-lucide="check-circle-2" class="w-4 h-4 text-brand-500 shrink-0 mt-0.5"></i>
+                <span><strong>Todo lo del Plan Semilla</strong>, más:</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <i data-lucide="check" class="w-4 h-4 text-brand-500 shrink-0 mt-0.5"></i>
+                <span><strong>IA Experta en Biblia Reina-Valera 1960</strong> para feligreses y pastores</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <i data-lucide="check" class="w-4 h-4 text-brand-500 shrink-0 mt-0.5"></i>
+                <span><strong>Devocionales diarios automáticos con IA</strong></span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <i data-lucide="check" class="w-4 h-4 text-brand-500 shrink-0 mt-0.5"></i>
+                <span><strong>Alertas Push ilimitadas</strong> a la pantalla de los miembros</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <i data-lucide="check" class="w-4 h-4 text-brand-500 shrink-0 mt-0.5"></i>
+                <span><strong>Muro de Oración interactivo</strong> para la congregación</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <i data-lucide="check" class="w-4 h-4 text-brand-500 shrink-0 mt-0.5"></i>
+                <span>Módulo <em>"Queremos Conocerte"</em> para nuevos visitantes</span>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <a 
+              href="#contacto" 
+              onclick="seleccionarPlan('Plan Crecimiento')"
+              class="w-full py-4 px-6 rounded-xl font-bold text-xs sm:text-sm text-white bg-slate-900 hover:bg-slate-800 text-center block transition-all shadow-md hover:shadow-lg"
+            >
+              Comenzar prueba gratis de 14 días
+            </a>
+          </div>
+        </div>
+
+        <!-- ==================== PLAN REINO ==================== -->
+        <div class="rounded-3xl bg-slate-50/60 border border-slate-200 p-8 flex flex-col justify-between hover:bg-white hover:shadow-card-hover hover:border-brand-200 transition-all duration-300">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Multi-Ministerial</span>
+              <span class="text-2xl">👑</span>
+            </div>
+            <h3 class="text-2xl font-extrabold text-slate-900">Plan Reino</h3>
+            <p class="text-xs text-slate-500 mt-1">Para congregaciones consolidadas con múltiples ministerios, sedes o estructura de células.</p>
+            
+            <!-- Precio -->
+            <div class="mt-6 mb-6 pb-6 border-b border-slate-200">
+              <div class="flex items-baseline gap-1">
+                <span class="text-4xl font-extrabold text-slate-900 price-reino">$85.000</span>
+                <span class="text-sm font-semibold text-slate-500 billing-text">/mes</span>
+              </div>
+              <p class="text-[11px] text-slate-400 mt-1 subtext-reino">Ajuste semestral por IPC</p>
+            </div>
+
+            <!-- Features -->
+            <ul class="space-y-3 text-xs sm:text-sm text-slate-600 mb-8">
+              <li class="flex items-start gap-2.5 font-medium text-slate-800">
+                <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500 shrink-0 mt-0.5"></i>
+                <span><strong>Todo lo del Plan Crecimiento</strong>, más:</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <i data-lucide="check" class="w-4 h-4 text-emerald-500 shrink-0 mt-0.5"></i>
+                <span><strong>Módulo de Grupos / Células de Discipulado</strong> con material exclusivo</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <i data-lucide="check" class="w-4 h-4 text-emerald-500 shrink-0 mt-0.5"></i>
+                <span><strong>Integración de Transmisión en Vivo</strong> (YouTube / Facebook Live)</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <i data-lucide="check" class="w-4 h-4 text-emerald-500 shrink-0 mt-0.5"></i>
+                <span><strong>Extractor IA de versículos</strong> para preparación de sermones</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <i data-lucide="check" class="w-4 h-4 text-emerald-500 shrink-0 mt-0.5"></i>
+                <span>Múltiples administradores y líderes pastorales</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <i data-lucide="check" class="w-4 h-4 text-emerald-500 shrink-0 mt-0.5"></i>
+                <span>Soporte prioritario directo por WhatsApp</span>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <a 
+              href="#contacto" 
+              onclick="seleccionarPlan('Plan Reino')"
+              class="w-full py-3.5 px-6 rounded-xl font-bold text-xs sm:text-sm text-slate-700 bg-white hover:bg-slate-100 border border-slate-300 text-center block transition-all shadow-2xs"
+            >
+              Comenzar prueba gratis de 14 días
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Preguntas Frecuentes / Políticas de Precio -->
+      <div class="mt-16 max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 pt-10 border-t border-slate-100">
+        
+        <div class="p-5 rounded-2xl bg-slate-50/70 border border-slate-200/80">
+          <h4 class="text-sm font-bold text-slate-900 flex items-center gap-2 mb-1.5">
+            <i data-lucide="arrow-up-right" class="w-4 h-4 text-brand-600"></i>
+            ¿Cómo funcionan los upgrades de un plan anual?
+          </h4>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Si contrataste un plan anual y querés acceder a funciones de un plan superior, <strong>solo abonás la diferencia mensual por los meses restantes</strong> a tarifa plana (con un 5% de descuento preferencial). ¡Nunca perdés lo que ya invertiste!
+          </p>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-slate-50/70 border border-slate-200/80">
+          <h4 class="text-sm font-bold text-slate-900 flex items-center gap-2 mb-1.5">
+            <i data-lucide="lock" class="w-4 h-4 text-emerald-600"></i>
+            ¿Por qué conviene elegir el pago anual?
+          </h4>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Además de obtener un <strong>10% de descuento directo</strong>, el pago anual <strong>congela el valor de tu suscripción durante 12 meses completos</strong>, protegiendo el presupuesto de tu iglesia frente a los ajustes por inflación (IPC).
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- SECCIÓN DE CONTACTO (NETLIFY FORMS + ENVÍO A emanuelcerda70@gmail.com)     -->
+  <!-- ========================================================================= -->
+  <section id="contacto" class="py-20 lg:py-28 bg-white relative">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Encabezado de Contacto -->
+      <div class="text-center mb-12">
+        <div class="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-brand-50 text-brand-600 mb-4 border border-brand-100">
+          <i data-lucide="mail" class="w-6 h-6"></i>
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+          Llevá KoinoApp a tu Iglesia
+        </h2>
+        <p class="mt-3 text-base text-slate-500 max-w-lg mx-auto">
+          Completá el formulario para recibir una demostración personalizada. Tu mensaje será enviado directamente a nuestro equipo a <strong>emanuelcerda70@gmail.com</strong>.
+        </p>
+      </div>
+
+      <!-- Bloque Central del Formulario -->
+      <div class="bg-white rounded-3xl p-6 sm:p-10 border border-slate-200/90 shadow-soft">
+        
+        <!-- ================================================================= -->
+        <!-- FORMULARIO NETLIFY FORMS + ENVÍO AUTOMÁTICO A emanuelcerda70@gmail.com -->
+        <!-- ================================================================= -->
+        <form 
+          name="contacto_iglesias" 
+          method="POST" 
+          action="https://formsubmit.co/emanuelcerda70@gmail.com"
+          data-netlify="true" 
+          data-netlify-honeypot="bot-field"
+          class="space-y-6"
+        >
+          <!-- Atributos de compatibilidad Netlify Forms -->
+          <input type="hidden" name="form-name" value="contacto_iglesias" />
+          <p class="hidden">
+            <label>No llenar esto si eres humano: <input name="bot-field" /></label>
+          </p>
+
+          <!-- Atributos de FormSubmit para entregar directamente a emanuelcerda70@gmail.com -->
+          <input type="hidden" name="_subject" value="Nuevo contacto de Iglesia interesada en KoinoApp!" />
+          <input type="hidden" name="_captcha" value="false" />
+          <input type="hidden" name="_template" value="table" />
+          <input type="hidden" name="Destinatario" value="emanuelcerda70@gmail.com" />
+          <input type="hidden" name="_next" value="https://koino-app.netlify.app/#gracias" />
+
+          <!-- Campo: Nombre de la Iglesia o Pastor -->
+          <div>
+            <label for="nombre_iglesia_pastor" class="block text-sm font-semibold text-slate-700 mb-2">
+              Nombre de la Iglesia o Pastor <span class="text-brand-500">*</span>
+            </label>
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                <i data-lucide="user" class="w-4 h-4"></i>
+              </div>
+              <input 
+                type="text" 
+                id="nombre_iglesia_pastor" 
+                name="Nombre de la Iglesia o Pastor" 
+                required 
+                placeholder="Ej: Pastor Juan Pérez - Iglesia La Casa del Padre" 
+                class="w-full pl-10 pr-4 py-3 bg-slate-50/70 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400 focus:bg-white transition-all"
+              />
+            </div>
+          </div>
+
+          <!-- Campo: Email o Teléfono de contacto -->
+          <div>
+            <label for="contacto_input" class="block text-sm font-semibold text-slate-700 mb-2">
+              Email o Teléfono de contacto <span class="text-brand-500">*</span>
+            </label>
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                <i data-lucide="at-sign" class="w-4 h-4"></i>
+              </div>
+              <input 
+                type="text" 
+                id="contacto_input" 
+                name="Email o Teléfono de contacto" 
+                required 
+                placeholder="pastor@iglesia.org o +54 9 11 1234-5678" 
+                class="w-full pl-10 pr-4 py-3 bg-slate-50/70 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400 focus:bg-white transition-all"
+              />
+            </div>
+          </div>
+
+          <!-- Campo: Mensaje o dudas -->
+          <div>
+            <label for="mensaje_dudas" class="block text-sm font-semibold text-slate-700 mb-2">
+              Mensaje o dudas
+            </label>
+            <textarea 
+              id="mensaje_dudas" 
+              name="Mensaje o dudas" 
+              rows="4" 
+              placeholder="Contanos sobre tu congregación (número estimado de miembros, ciudad, dudas sobre la IA o la PWA)..." 
+              class="w-full px-4 py-3 bg-slate-50/70 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400 focus:bg-white transition-all resize-y"
+            ></textarea>
+          </div>
+
+          <!-- Botón de Envío que Resalta -->
+          <div>
+            <button 
+              type="submit" 
+              class="w-full py-4 px-6 text-base font-bold text-white bg-gradient-to-r from-brand-600 via-brand-500 to-sky-500 hover:from-brand-700 hover:via-brand-600 hover:to-sky-600 rounded-xl shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2 transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
+            >
+              <i data-lucide="send" class="w-4 h-4"></i>
+              <span>Solicitar KoinoApp para mi Iglesia</span>
+            </button>
+          </div>
+
+          <!-- Mensaje de Confidencialidad & Destinatario -->
+          <div class="text-center pt-2">
+            <p class="text-xs text-slate-400 flex items-center justify-center gap-1.5">
+              <i data-lucide="lock" class="w-3.5 h-3.5 text-slate-400"></i>
+              <span>Tus datos son recibidos de forma confidencial por nuestro equipo pastoral.</span>
+            </p>
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- FOOTER                                                                    -->
+  <!-- ========================================================================= -->
+  <footer class="mt-auto bg-slate-50 border-t border-slate-200/80 py-10">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+        
+        <!-- Identidad / Copyright con Logo Oficial -->
+        <div class="flex items-center gap-3">
+          <img 
+            src="./assets/koinoapp-logo.png" 
+            alt="KoinoApp" 
+            class="h-7 w-auto object-contain"
+          />
+          <p class="text-xs sm:text-sm text-slate-600 font-medium">
+            © 2026 KoinoApp. Desarrollado con 💛 para la Iglesia.
+          </p>
+        </div>
+
+        <!-- Enlace discreto / camuflado SuperAdmin -->
+        <div class="flex items-center gap-4">
+          <a 
+            href="https://emacerda1.pythonanywhere.com/superadmin/login" 
+            title="Panel de Administración Global"
+            class="text-[11px] text-slate-300 hover:text-slate-500 transition-colors duration-200 tracking-wider font-light"
+          >
+            Acceso SuperAdmin
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script para control interactivo de precios y planes -->
+  <script>
+    let cicloActual = 'monthly';
+
+    function setBillingCycle(tipo) {
+      cicloActual = tipo;
+      const btnMonthly = document.getElementById('btn-billing-monthly');
+      const btnAnnual = document.getElementById('btn-billing-annual');
+
+      const elPriceSemilla = document.querySelector('.price-semilla');
+      const elPriceCrecimiento = document.querySelector('.price-crecimiento');
+      const elPriceReino = document.querySelector('.price-reino');
+
+      const elSubSemilla = document.querySelector('.subtext-semilla');
+      const elSubCrecimiento = document.querySelector('.subtext-crecimiento');
+      const elSubReino = document.querySelector('.subtext-reino');
+
+      if (tipo === 'annual') {
+        btnAnnual.classList.remove('text-slate-500');
+        btnAnnual.classList.add('bg-white', 'text-slate-900', 'shadow-xs');
+
+        btnMonthly.classList.remove('bg-white', 'text-slate-900', 'shadow-xs');
+        btnMonthly.classList.add('text-slate-500');
+
+        elPriceSemilla.textContent = '$31.500';
+        elSubSemilla.innerHTML = 'Facturado <strong>$378.000/año</strong> (10% OFF · Precio Congelado)';
+
+        elPriceCrecimiento.textContent = '$49.500';
+        elSubCrecimiento.innerHTML = 'Facturado <strong>$594.000/año</strong> (10% OFF · Precio Congelado)';
+
+        elPriceReino.textContent = '$76.500';
+        elSubReino.innerHTML = 'Facturado <strong>$918.000/año</strong> (10% OFF · Precio Congelado)';
+      } else {
+        btnMonthly.classList.remove('text-slate-500');
+        btnMonthly.classList.add('bg-white', 'text-slate-900', 'shadow-xs');
+
+        btnAnnual.classList.remove('bg-white', 'text-slate-900', 'shadow-xs');
+        btnAnnual.classList.add('text-slate-500');
+
+        elPriceSemilla.textContent = '$35.000';
+        elSubSemilla.textContent = 'Ajuste semestral por IPC';
+
+        elPriceCrecimiento.textContent = '$55.000';
+        elSubCrecimiento.textContent = 'Ajuste semestral por IPC';
+
+        elPriceReino.textContent = '$85.000';
+        elSubReino.textContent = 'Ajuste semestral por IPC';
+      }
+    }
+
+    function seleccionarPlan(nombrePlan) {
+      const modalMensaje = document.getElementById('mensaje_dudas');
+      const modalidad = cicloActual === 'annual' ? 'Pago Anual (10% OFF con precio congelado)' : 'Pago Mensual';
+      if (modalMensaje) {
+        modalMensaje.value = `¡Hola! Me interesa comenzar la prueba gratuita de 14 días con el ${nombrePlan} (${modalidad}).`;
+      }
+      setTimeout(() => {
+        const inputNombre = document.getElementById('nombre_iglesia_pastor');
+        if (inputNombre) inputNombre.focus();
+      }, 500);
+    }
+
+    lucide.createIcons();
+  </script>
+</body>
+</html>
